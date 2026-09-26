@@ -135,12 +135,56 @@ forms.forEach(form => {
                     }, (err) => {
                         btn.textContent = originalText;
                         btn.disabled = false;
-                        alert('Failed to send message: ' + JSON.stringify(err));
+                        alert('Failed to send message: ' + (err.text || JSON.stringify(err)));
                     });
+            } else if (form.id === 'visit-form') {
+                const serviceID = 'service_nr5yl6q';
+                const templateID = 'template_b2nozhr';
+
+                const visitName = document.getElementById('visit-name')?.value || '';
+                const visitEmail = document.getElementById('visit-email')?.value || '';
+                const visitDate = document.getElementById('visit-date')?.value || '';
+                const visitKids = document.getElementById('visit-kids')?.value || 'No';
+
+                const visitMessageEl = document.getElementById('visit-message');
+                const formattedMessage = `Plan Your Visit Request:\nName: ${visitName}\nEmail: ${visitEmail}\nPlanned Date: ${visitDate}\nBringing Kids: ${visitKids}`;
+                if (visitMessageEl) {
+                    visitMessageEl.value = formattedMessage;
+                }
+
+                if (typeof emailjs !== 'undefined') {
+                    emailjs.send(serviceID, templateID, {
+                        name: visitName,
+                        email: visitEmail,
+                        message: formattedMessage,
+                        visit_date: visitDate,
+                        kids: visitKids
+                    }).then(() => {
+                        alert('Thank you! Your visit has been scheduled. We look forward to welcoming you!');
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                        form.reset();
+                        if (modal && modal.classList.contains('active')) {
+                            modal.classList.remove('active');
+                        }
+                    }, (err) => {
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                        alert('Failed to schedule visit: ' + (err.text || JSON.stringify(err)));
+                    });
+                } else {
+                    alert('Thank you! Your visit has been scheduled.');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    form.reset();
+                    if (modal && modal.classList.contains('active')) {
+                        modal.classList.remove('active');
+                    }
+                }
             } else {
                 // Fallback / Other forms
                 setTimeout(() => {
-                    alert('Thank you! Your message has been received.');
+                    alert('Thank you! Your submission has been received.');
                     btn.textContent = originalText;
                     btn.disabled = false;
                     form.reset();
@@ -151,6 +195,19 @@ forms.forEach(form => {
             }
         }
     });
+});
+
+// Close modals on Escape key
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (modal && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+        }
+        if (videoModal && videoModal.classList.contains('active')) {
+            videoModal.classList.remove('active');
+            if (videoFrame) videoFrame.src = "";
+        }
+    }
 });
 
 
@@ -279,12 +336,35 @@ function renderFallbackEvents(message) {
     if (!eventsContainer) return;
 
     eventsContainer.innerHTML = `
-        <div class="no-events fade-in visible center-text" style="padding: 2rem; background: var(--bg-soft); border-radius: var(--radius-md); border: 1px dashed var(--glass-border);">
-            <i class="fas fa-calendar-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; display: block;"></i>
-            <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Stay Tuned!</h3>
-            <p style="color: var(--text-light);">We are currently updating our calendar. Check back soon for our next special program!</p>
+        <div class="event-item featured-event fade-in-up visible">
+            <div class="event-flyer-thumb">
+                <img src="images/breakthrough_anointing_service.png" alt="Breakthrough Anointing Service - The Story and the Writer">
+            </div>
+            <div class="event-date">
+                <span class="day">27</span>
+                <span class="month">SEP</span>
+            </div>
+            <div class="event-details">
+                <span class="event-badge">Breakthrough Anointing Service</span>
+                <h3>The Story and the Writer</h3>
+                <p class="event-schedule"><i class="fas fa-clock"></i> <strong>1st Service:</strong> 8:00 AM &bull; <strong>Sunday School:</strong> 9:00 AM &bull; <strong>2nd Service:</strong> 10:00 AM</p>
+                <p class="event-location"><i class="fas fa-map-marker-alt"></i> RCCG Liveliest People Cathedral, Lao-Odota Airport Rd, Ilorin</p>
+                <p class="event-ministers"><i class="fas fa-user-tie"></i> <strong>Host:</strong> Pastor Olaniyan Joshua A. Tosin (APICR Reg 4 & PICP Kwara 3)</p>
+            </div>
+            <div class="event-cta">
+                <a href="#contact" class="btn btn-primary btn-sm btn-primary-nav">Plan Your Visit</a>
+            </div>
         </div>
     `;
+
+    // Rebind Plan Visit modal triggers
+    eventsContainer.querySelectorAll('.btn-primary-nav').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const modal = document.getElementById('visit-modal');
+            if (modal) modal.classList.add('active');
+        });
+    });
 
     if (message) {
         console.warn('Calendar Info:', message);
@@ -580,6 +660,13 @@ function renderFallbackActivities() {
     // Fallback data if API fails or for demonstration
     const featuredActivities = [
         {
+            title: "Breakthrough Anointing Service: The Story and the Writer",
+            date: "Sep 27, 2026",
+            summary: "Is your story ready for a divine turnaround? Join Pastor Olaniyan Joshua A. Tosin for prophetic prayers, anointing, and salvation.",
+            thumbnail: "images/breakthrough_anointing_service.png",
+            link: "https://www.facebook.com/people/RCCG-KWARA-Province-3-Ilorin-Trinity-Family/61594495420863/"
+        },
+        {
             title: "Community Outreach 2026",
             date: "Feb 15, 2026",
             summary: "Our annual community outreach was a huge success. We were able to reach over 500 families with food and medical supplies.",
@@ -591,13 +678,6 @@ function renderFallbackActivities() {
             date: "Jan 10, 2026",
             summary: "The NextGen Youth Summit brought together hundreds of young leaders for a weekend of inspiration and growth.",
             thumbnail: "images/youth.png",
-            link: "https://rccgkwaraprovince3.blogspot.com"
-        },
-        {
-            title: "New Sunday Service Times",
-            date: "Jan 01, 2026",
-            summary: "To better serve our growing community, we are introducing a second service starting this Sunday.",
-            thumbnail: "images/about-community.png",
             link: "https://rccgkwaraprovince3.blogspot.com"
         }
     ];
