@@ -34,6 +34,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/site.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- EmailJS SDK -->
@@ -62,13 +63,17 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Our Story</a></li>
                 <li><a href="#ministries">Ministries</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#sermons">Sermons</a></li>
                 <li><a href="#activities">Activities</a></li>
                 <li><a href="#events">Events</a></li>
                 <li><a href="#contact" class="btn-primary-nav">Visit Us</a></li>
             </ul>
 
-            <button class="mobile-menu-btn" aria-label="Toggle navigation" id="mobile-menu-btn">
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+            </button>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links" id="mobile-menu-btn">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -80,8 +85,7 @@
     <section id="home" class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content container fade-in-up">
-            <span class="sub-heading"
-                style="color: white; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); margin-bottom: 2rem;">Welcome
+            <span class="sub-heading hero-label">Welcome
                 to our community</span>
             <h1>Experience the Divine</h1>
             <p>A modern fellowship of faith, love, and transformation. You belong here.</p>
@@ -165,6 +169,43 @@
                         <p>Serving our city and making a difference together.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add church photos by copying a gallery-item and changing its image path and caption. -->
+    <section id="gallery" class="gallery-section reveal">
+        <div class="container">
+            <div class="section-header">
+                <span class="sub-heading">Life Together</span>
+                <h2>Moments from our church</h2>
+                <p>Worship, fellowship, and serving our community in Ilorin.</p>
+            </div>
+            <div class="gallery-grid">
+                <button class="gallery-item gallery-item-tall" type="button" data-image="images/arena-alter.png" data-caption="Worship at Liveliest People Cathedral">
+                    <img src="images/arena-alter.png" alt="Worship at Liveliest People Cathedral" loading="lazy">
+                    <span>Worship together</span>
+                </button>
+                <button class="gallery-item" type="button" data-image="images/evangelism.png" data-caption="Sharing hope in our community">
+                    <img src="images/evangelism.png" alt="Church members sharing hope in the community" loading="lazy">
+                    <span>Out in the community</span>
+                </button>
+                <button class="gallery-item" type="button" data-image="images/ministry-kids.png" data-caption="Grace Kids">
+                    <img src="images/ministry-kids.png" alt="Grace Kids ministry" loading="lazy">
+                    <span>Grace Kids</span>
+                </button>
+                <button class="gallery-item" type="button" data-image="images/youth.png" data-caption="Our youth fellowship">
+                    <img src="images/youth.png" alt="Youth fellowship" loading="lazy">
+                    <span>Youth fellowship</span>
+                </button>
+                <button class="gallery-item gallery-item-wide" type="button" data-image="images/women.png" data-caption="Growing together in faith">
+                    <img src="images/women.png" alt="Church women growing together in faith" loading="lazy">
+                    <span>Growing together</span>
+                </button>
+                <button class="gallery-item" type="button" data-image="images/ministry-outreach.png" data-caption="Serving our city">
+                    <img src="images/ministry-outreach.png" alt="Church outreach serving the city" loading="lazy">
+                    <span>Serving our city</span>
+                </button>
             </div>
         </div>
     </section>
@@ -298,6 +339,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">Our Story</a></li>
                     <li><a href="#ministries">Ministries</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
                     <li><a href="#sermons">Sermons</a></li>
                     <li><a href="#activities">Activities</a></li>
                     <li><a href="#events">Events</a></li>
@@ -374,6 +416,12 @@
             </div>
         </div>
     </div>
+
+    <dialog class="gallery-dialog" id="gallery-dialog" aria-label="Church photo">
+        <button class="gallery-dialog-close" id="gallery-dialog-close" type="button" aria-label="Close photo">&times;</button>
+        <img id="gallery-dialog-image" src="" alt="">
+        <p id="gallery-dialog-caption"></p>
+    </dialog>
 
     <script src="js/script.js"></script>
     <script src="js/blogger_auth.js"></script>

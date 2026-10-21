@@ -8,6 +8,7 @@ function initNav() {
         mobileBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             mobileBtn.classList.toggle('active');
+            mobileBtn.setAttribute('aria-expanded', navLinks.classList.contains('active'));
         });
 
         // Close menu when clicking a link
@@ -15,9 +16,53 @@ function initNav() {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 mobileBtn.classList.remove('active');
+                mobileBtn.setAttribute('aria-expanded', 'false');
             });
         });
     }
+}
+
+function initTheme() {
+    const themeButton = document.getElementById('theme-toggle');
+    if (!themeButton) return;
+
+    const savedTheme = localStorage.getItem('rccg-theme');
+    const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+    function setTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        const isDark = theme === 'dark';
+        themeButton.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'}" aria-hidden="true"></i>`;
+        themeButton.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+        localStorage.setItem('rccg-theme', theme);
+    }
+
+    setTheme(savedTheme || preferredTheme);
+    themeButton.addEventListener('click', () => {
+        setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    });
+}
+
+function initGallery() {
+    const galleryDialog = document.getElementById('gallery-dialog');
+    const galleryImage = document.getElementById('gallery-dialog-image');
+    const galleryCaption = document.getElementById('gallery-dialog-caption');
+    const closeButton = document.getElementById('gallery-dialog-close');
+    if (!galleryDialog || !galleryImage || !galleryCaption || !closeButton) return;
+
+    document.querySelectorAll('.gallery-item').forEach((item) => {
+        item.addEventListener('click', () => {
+            galleryImage.src = item.dataset.image;
+            galleryImage.alt = item.querySelector('img')?.alt || '';
+            galleryCaption.textContent = item.dataset.caption || '';
+            galleryDialog.showModal();
+        });
+    });
+
+    closeButton.addEventListener('click', () => galleryDialog.close());
+    galleryDialog.addEventListener('click', (event) => {
+        if (event.target === galleryDialog) galleryDialog.close();
+    });
 }
 
 // Navbar Scroll Effect
@@ -383,6 +428,8 @@ function getNextDayOfWeek(date, dayOfWeek, timeStr) {
 // Initialize components
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
+    initTheme();
+    initGallery();
     fetchUpcomingEvents();
     fetchBloggerPosts();
     fetchLatestSermons();
