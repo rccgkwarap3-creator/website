@@ -65,6 +65,50 @@ function initGallery() {
     });
 }
 
+function initHeroSlider() {
+    const heroSection = document.querySelector('.hero');
+    const slides = [...document.querySelectorAll('.hero-slide')];
+    const prevButton = document.querySelector('.hero-arrow-left');
+    const nextButton = document.querySelector('.hero-arrow-right');
+
+    if (!heroSection || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let autoplayId;
+
+    const showSlide = (index) => {
+        currentIndex = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+            slide.classList.toggle('active', slideIndex === currentIndex);
+        });
+    };
+
+    const startAutoplay = () => {
+        clearInterval(autoplayId);
+        autoplayId = setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 5000);
+    };
+
+    prevButton?.addEventListener('click', () => {
+        showSlide(currentIndex - 1);
+        startAutoplay();
+    });
+
+    nextButton?.addEventListener('click', () => {
+        showSlide(currentIndex + 1);
+        startAutoplay();
+    });
+
+    heroSection.addEventListener('mouseenter', () => clearInterval(autoplayId));
+    heroSection.addEventListener('mouseleave', startAutoplay);
+
+    showSlide(0);
+    startAutoplay();
+}
+
+initHeroSlider();
+
 // Navbar Scroll Effect
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {

@@ -1,6 +1,11 @@
 window.SITE_IMAGES = Object.freeze({
     logo: 'images/logo.png',
-    hero: 'images/banner.png',
+    hero: 'images/hero-slide-1.png',
+    heroSlides: [
+        'images/hero-slide-1.png',
+        'images/hero-slide-2.jpeg',
+        'images/hero-slide-3.jpeg'
+    ],
     about: 'images/audience.jpg',
     ministryKids: 'images/kids.jpg',
     ministryYouth: 'images/youth1.jpg',
