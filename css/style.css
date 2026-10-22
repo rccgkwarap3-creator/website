@@ -278,8 +278,7 @@ ul {
 .hero-slide {
     position: absolute;
     inset: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     opacity: 0;
@@ -782,7 +781,8 @@ ul {
     height: 200px;
     background-color: #f3f4f6;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     transition: transform 0.5s ease;
 }
 
