@@ -699,13 +699,7 @@ function renderBloggerPosts(posts) {
         });
 
         // Extract thumbnail
-        let thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
-        if (post.images && post.images.length > 0) {
-            thumbnailUrl = post.images[0].url;
-        } else if (post.content) {
-            const imgMatch = post.content.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch) thumbnailUrl = imgMatch[1];
-        }
+        const thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
 
         // Create summary (remove HTML tags and truncate)
         let summary = 'Read more about our latest activity...';
@@ -805,14 +799,7 @@ function renderBloggerFeed(entries) {
             year: 'numeric'
         });
 
-        // Extract thumbnail
-        let thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
-        if (entry['media$thumbnail']) {
-            thumbnailUrl = entry['media$thumbnail'].url.replace('/s72-c/', '/s1600/'); // Get higher res
-        } else if (entry.content && entry.content.$t) {
-            const imgMatch = entry.content.$t.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch) thumbnailUrl = imgMatch[1];
-        }
+        const thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
 
         // Create summary
         let summary = 'Read more about our latest activity...';

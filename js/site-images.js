@@ -11,8 +11,8 @@ window.SITE_IMAGES = Object.freeze({
     ministryYouth: 'images/youth1.jpg',
     ministryOutreach: 'images/evangelism.png',
     eventFlyer: 'images/breakthrough_anointing_service.png',
-    bloggerFallback: 'images/about-community.png',
-    fallbackActivity: 'images/breakthrough_anointing_service.png',
+    bloggerFallback: 'images/image-1792661023617.png',
+    fallbackActivity: 'images/image-1792661023617.png',
     fallbackOutreach: 'images/ministry-outreach.png',
     fallbackYouth: 'images/youth.png',
     gallery: [
