@@ -691,12 +691,7 @@ function renderBloggerPosts(posts) {
     posts.forEach(post => {
         const title = post.title;
         const link = post.url;
-        const publishedDate = new Date(post.published);
-        const formattedDate = publishedDate.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-        });
+        const formattedDate = '16th Oct 2026';
 
         // Extract thumbnail
         const thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
@@ -718,7 +713,8 @@ function renderBloggerPosts(posts) {
         ` : '';
 
         activityCard.innerHTML = `
-            <div class="activity-thumbnail" style="background-image: url('${thumbnailUrl}');">
+            <div class="activity-thumbnail">
+                <img src="${thumbnailUrl}" alt="Province-based ministers and workers conference vigil" loading="lazy">
                 ${adminControls}
             </div>
             <div class="activity-content">
@@ -745,9 +741,9 @@ function renderFallbackActivities() {
     // Fallback data if API fails or for demonstration
     const featuredActivities = [
         {
-            title: "Breakthrough Anointing Service: The Story and the Writer",
-            date: "Sep 27, 2026",
-            summary: "Is your story ready for a divine turnaround? Join Pastor Olaniyan Joshua A. Tosin for prophetic prayers, anointing, and salvation.",
+            title: "Province Based Ministers and Workers Conference Vigil",
+            date: "16th Oct 2026",
+            summary: "Deeper Prayer | Greater Commitment | Increased Impact. Side attraction: distribution of gari.",
             thumbnail: window.SITE_IMAGES.fallbackActivity,
             link: "https://www.facebook.com/people/RCCG-KWARA-Province-3-Ilorin-Trinity-Family/61594495420863/"
         },
@@ -771,7 +767,9 @@ function renderFallbackActivities() {
         const card = document.createElement('div');
         card.className = 'activity-card fade-in visible';
         card.innerHTML = `
-            <div class="activity-thumbnail" style="background-image: url('${item.thumbnail}');"></div>
+            <div class="activity-thumbnail">
+                <img src="${item.thumbnail}" alt="${item.title}" loading="lazy">
+            </div>
             <div class="activity-content">
                 <span class="activity-date">${item.date}</span>
                 <h3>${item.title}</h3>
@@ -792,12 +790,7 @@ function renderBloggerFeed(entries) {
         const title = entry.title.$t;
         const alternateLink = entry.link.find(l => l.rel === 'alternate');
         const link = alternateLink ? alternateLink.href : '#';
-        const publishedDate = new Date(entry.published.$t);
-        const formattedDate = publishedDate.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-        });
+        const formattedDate = '16th Oct 2026';
 
         const thumbnailUrl = window.SITE_IMAGES.bloggerFallback;
 
@@ -822,7 +815,8 @@ function renderBloggerFeed(entries) {
         ` : '';
 
         activityCard.innerHTML = `
-            <div class="activity-thumbnail" style="background-image: url('${thumbnailUrl}');">
+            <div class="activity-thumbnail">
+                <img src="${thumbnailUrl}" alt="Province-based ministers and workers conference vigil" loading="lazy">
                 ${adminControls}
             </div>
             <div class="activity-content">

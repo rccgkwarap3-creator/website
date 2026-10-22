@@ -778,16 +778,15 @@ ul {
 }
 
 .activity-thumbnail {
-    height: 200px;
-    background-color: #f3f4f6;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    transition: transform 0.5s ease;
+    position: relative;
 }
 
-.activity-card:hover .activity-thumbnail {
-    transform: scale(1.05);
+.activity-thumbnail img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    margin-inline: auto;
 }
 
 .activity-content {
@@ -806,7 +805,6 @@ ul {
     border-radius: 50px;
     font-weight: 700;
     margin-bottom: 1rem;
-    text-transform: uppercase;
 }
 
 .activity-content h3 {
